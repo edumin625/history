@@ -79,10 +79,15 @@ export default function Home() {
       return;
     }
 
+    // 현재 사이트의 도메인을 동적으로 가져옴 (localhost 또는 배포 도메인)
+    const origin = window.location.origin;
     try {
       const { error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${origin}`,
+        },
       });
 
       if (error) {
@@ -141,7 +146,7 @@ export default function Home() {
                   type="submit"
                   color="blue"
                   caption={loading ? '로그인 중...' : '로그인'}
-                  onHandle={() => {}}
+                  onHandle={() => { }}
                 />
                 <TailButton
                   type="button"

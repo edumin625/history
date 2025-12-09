@@ -31,12 +31,11 @@ export default function HistoryPage() {
     }
 
     startTransition(async () => {
-      try {
-        const result = await generateHistory(region);
-        setSummary(result);
-      } catch (error) {
-        console.error(error);
-        alert((error as Error).message);
+      const result = await generateHistory(region);
+      if (result.ok && result.data) {
+        setSummary(result.data);
+      } else {
+        alert(result.error || 'An unexpected error occurred.');
         setSummary('');
       }
     });
